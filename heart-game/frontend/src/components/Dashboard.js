@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import LevelSelection from './LevelSelection';
 import './Dashboard.css';
 
-const Dashboard = ({ user, onLogout }) => {
+const Dashboard = ({ user, onLogout, onStartGame }) => {
+    const [currentView, setCurrentView] = useState('dashboard');
     const [isVisible, setIsVisible] = useState(false);
     const [monkeyAnimation, setMonkeyAnimation] = useState('idle');
 
@@ -9,13 +11,30 @@ const Dashboard = ({ user, onLogout }) => {
         setIsVisible(true);
     }, []);
 
-    const handleStartGame = () => {
+    const handleStartAdventure = () => {
         setMonkeyAnimation('excited');
         setTimeout(() => {
-            // Add your game start logic here
-            console.log('Starting the game...');
+            setCurrentView('level-selection');
         }, 1000);
     };
+
+    const handleBackToDashboard = () => {
+        setCurrentView('dashboard');
+    };
+
+    const handleLevelSelect = (levelSettings) => {
+        onStartGame(levelSettings);
+    };
+
+    if (currentView === 'level-selection') {
+        return (
+            <LevelSelection 
+                user={user}
+                onBack={handleBackToDashboard}
+                onLevelSelect={handleLevelSelect}
+            />
+        );
+    }
 
     return (
         <div className="dashboard-container">
@@ -68,7 +87,7 @@ const Dashboard = ({ user, onLogout }) => {
 
                     <button 
                         className="start-button"
-                        onClick={handleStartGame}
+                        onClick={handleStartAdventure}
                         onMouseEnter={() => setMonkeyAnimation('looking')}
                         onMouseLeave={() => setMonkeyAnimation('idle')}
                     >
