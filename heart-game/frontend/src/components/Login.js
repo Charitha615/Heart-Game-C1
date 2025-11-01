@@ -26,12 +26,12 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
             const response = await authAPI.login(formData);
             
             if (response.data.success) {
-                setMessage('Login successful!');
+                setMessage('✨ Welcome back to Heart Game!');
                 localStorage.setItem('user', JSON.stringify(response.data.user));
-                onLoginSuccess(response.data.user);
+                setTimeout(() => onLoginSuccess(response.data.user), 1500);
             }
         } catch (error) {
-            setMessage(error.response?.data?.message || 'Login failed. Please try again.');
+            setMessage(error.response?.data?.message || 'Login failed. Please check your credentials.');
         } finally {
             setLoading(false);
         }
@@ -42,34 +42,40 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
             <div className="auth-card">
                 <div className="auth-header">
                     <h2>Welcome Back</h2>
-                    <p>Sign in to continue your Heart Game journey</p>
+                    <p>Continue your Heart Game journey where you left off</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="auth-form">
                     <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            placeholder="Enter your email"
-                        />
+                        <label htmlFor="email">Email Address</label>
+                        <div className="input-container">
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                                placeholder="your.email@example.com"
+                            />
+                            <div className="input-icon">✉️</div>
+                        </div>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            placeholder="Enter your password"
-                        />
+                        <div className="input-container">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                                placeholder="Enter your password"
+                            />
+                            <div className="input-icon">🔑</div>
+                        </div>
                     </div>
 
                     <button 
@@ -77,20 +83,28 @@ const Login = ({ onSwitchToRegister, onLoginSuccess }) => {
                         className="auth-button"
                         disabled={loading}
                     >
-                        {loading ? 'Signing In...' : 'Sign In'}
+                        {loading ? (
+                            <span className="loading-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        ) : (
+                            'Sign In to Adventure'
+                        )}
                     </button>
                 </form>
 
                 {message && (
-                    <div className={`message ${message.includes('successful') ? 'success' : 'error'}`}>
+                    <div className={`message ${message.includes('✨') ? 'success' : 'error'}`}>
                         {message}
                     </div>
                 )}
 
                 <div className="auth-switch">
-                    <p>Don't have an account? 
+                    <p>New to Heart Game? 
                         <span onClick={onSwitchToRegister} className="switch-link">
-                            Sign up
+                            Join the adventure
                         </span>
                     </p>
                 </div>

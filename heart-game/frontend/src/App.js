@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Loading from './components/Loading';
 import Login from './components/Login';
 import Register from './components/Register';
+import Dashboard from './components/Dashboard.js';
 import './App.css';
 
 function App() {
@@ -59,21 +60,10 @@ function App() {
                 );
             case 'dashboard':
                 return (
-                    <div className="dashboard">
-                        <div className="dashboard-card">
-                            <div className="welcome-section">
-                                <h1>Welcome to Heart Game! ❤️</h1>
-                                <p>Hello, {currentUser?.username}!</p>
-                                <div className="user-info">
-                                    <p><strong>Email:</strong> {currentUser?.email}</p>
-                                    <p><strong>User ID:</strong> {currentUser?.id}</p>
-                                </div>
-                            </div>
-                            <button onClick={handleLogout} className="logout-button">
-                                Logout
-                            </button>
-                        </div>
-                    </div>
+                    <Dashboard 
+                        user={currentUser}
+                        onLogout={handleLogout}
+                    />
                 );
             default:
                 return <Loading />;
