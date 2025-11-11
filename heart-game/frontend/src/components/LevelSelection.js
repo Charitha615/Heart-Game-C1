@@ -365,7 +365,7 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
                             </button>
                             <button 
                                 className="popup-button popup-button-confirm"
-                                // onClick={handleStartGame}
+                                onClick={handleStartGame}
                                 style={{ backgroundColor: alertData.level.color }}
                             >
                                 Start Game
