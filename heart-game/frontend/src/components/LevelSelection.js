@@ -1,164 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import './LevelSelection.css';
-
-// const LevelSelection = ({ user, onBack, onLevelSelect }) => {
-//     const [selectedLevel, setSelectedLevel] = useState(null);
-//     const [showAlert, setShowAlert] = useState(false);
-//     const [alertData, setAlertData] = useState(null);
-
-//     const levels = [
-//         {
-//             id: 'easy',
-//             name: 'Easy',
-//             time: 60,
-//             description: 'Perfect for beginners',
-//             color: '#10b981',
-//             icon: '😊',
-//             difficulty: 1
-//         },
-//         {
-//             id: 'medium',
-//             name: 'Medium',
-//             time: 40,
-//             description: 'A bit more challenging',
-//             color: '#f59e0b',
-//             icon: '😐',
-//             difficulty: 2
-//         },
-//         {
-//             id: 'hard',
-//             name: 'Hard',
-//             time: 30,
-//             description: 'For experienced players',
-//             color: '#ef4444',
-//             icon: '😰',
-//             difficulty: 3
-//         },
-//         {
-//             id: 'expert',
-//             name: 'Expert',
-//             time: 15,
-//             description: 'Ultimate challenge!',
-//             color: '#8b5cf6',
-//             icon: '😈',
-//             difficulty: 4
-//         }
-//     ];
-
-//     const handleLevelSelect = (level) => {
-//         setSelectedLevel(level);
-        
-//         // Show brief loading then start game
-//         setTimeout(() => {
-//             onLevelSelect(level);
-//         }, 800);
-//     };
-
-//     const handleCloseAlert = () => {
-//         setShowAlert(false);
-//         setSelectedLevel(null);
-//     };
-
-//     const handleTryAgain = () => {
-//         setShowAlert(false);
-//         setSelectedLevel(null);
-//     };
-
-//     const handleNextLevel = () => {
-//         setShowAlert(false);
-//         setSelectedLevel(null);
-//         // Logic for next level would go here
-//     };
-
-//     return (
-//         <div className="level-selection-container">
-//             {/* Animated Background */}
-//             <div className="level-background">
-//                 <div className="floating-banana banana-1">🍌</div>
-//                 <div className="floating-banana banana-2">🍌</div>
-//                 <div className="floating-leaf leaf-1">🍃</div>
-//                 <div className="floating-cloud cloud-1">☁️</div>
-//             </div>
-
-//             {/* Header */}
-//             <div className="level-header">
-//                 <button className="back-button" onClick={onBack}>
-//                     <span className="back-icon">←</span>
-//                     Back to Dashboard
-//                 </button>
-//                 <h1 className="level-title">Choose Your Challenge</h1>
-//                 <p className="level-subtitle">Select a difficulty level to begin your banana adventure!</p>
-//             </div>
-
-//             {/* Level Cards Grid */}
-//             <div className="levels-grid">
-//                 {levels.map((level, index) => (
-//                     <div
-//                         key={level.id}
-//                         className={`level-card ${selectedLevel?.id === level.id ? 'selected' : ''}`}
-//                         style={{ animationDelay: `${index * 0.1}s` }}
-//                         onClick={() => handleLevelSelect(level)}
-//                     >
-//                         <div className="level-card-header">
-//                             <div className="level-icon" style={{ backgroundColor: level.color }}>
-//                                 {level.icon}
-//                             </div>
-//                             <div className="level-info">
-//                                 <h3 className="level-name">{level.name}</h3>
-//                                 <p className="level-description">{level.description}</p>
-//                             </div>
-//                         </div>
-                        
-//                         <div className="level-timer">
-//                             <div className="timer-icon">⏱️</div>
-//                             <span className="timer-text">Timer: {level.time}s</span>
-//                         </div>
-
-//                         <button className="level-start-button">
-//                             {selectedLevel?.id === level.id ? (
-//                                 <div className="loading-dots">
-//                                     <span></span>
-//                                     <span></span>
-//                                     <span></span>
-//                                 </div>
-//                             ) : (
-//                                 'START'
-//                             )}
-//                         </button>
-
-//                         <div className="difficulty-indicator">
-//                             {[...Array(4)].map((_, i) => (
-//                                 <div
-//                                     key={i}
-//                                     className={`difficulty-dot ${i < level.difficulty ? 'active' : ''}`}
-//                                     style={{ backgroundColor: i < level.difficulty ? level.color : '#e5e7eb' }}
-//                                 ></div>
-//                             ))}
-//                         </div>
-//                     </div>
-//                 ))}
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default LevelSelection;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import './LevelSelection.css';
 
@@ -175,7 +14,8 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
             description: 'Perfect for beginners',
             color: '#10b981',
             icon: '😊',
-            difficulty: 1
+            difficulty: 1,
+            rabbitMood: 'happy'
         },
         {
             id: 'medium',
@@ -184,7 +24,8 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
             description: 'A bit more challenging',
             color: '#f59e0b',
             icon: '😐',
-            difficulty: 2
+            difficulty: 2,
+            rabbitMood: 'alert'
         },
         {
             id: 'hard',
@@ -193,7 +34,8 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
             description: 'For experienced players',
             color: '#ef4444',
             icon: '😰',
-            difficulty: 3
+            difficulty: 3,
+            rabbitMood: 'nervous'
         },
         {
             id: 'expert',
@@ -202,7 +44,8 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
             description: 'Ultimate challenge!',
             color: '#8b5cf6',
             icon: '😈',
-            difficulty: 4
+            difficulty: 4,
+            rabbitMood: 'excited'
         }
     ];
 
@@ -223,16 +66,16 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
     };
 
     // Handle starting the game after user confirms in popup
-    // const handleStartGame = () => {
-    //     // Step 1: Close the popup dialog
-    //     setShowAlert(false);
+    const handleStartGame = () => {
+        // Step 1: Close the popup dialog
+        setShowAlert(false);
         
-    //     // Step 2: Show brief loading animation
-    //     setTimeout(() => {
-    //         // Step 3: Call the parent component's function to start the game
-    //         onLevelSelect(selectedLevel);
-    //     }, 800);
-    // };
+        // Step 2: Show brief loading animation
+        setTimeout(() => {
+            // Step 3: Call the parent component's function to start the game
+            onLevelSelect(selectedLevel);
+        }, 800);
+    };
 
     const handleCloseAlert = () => {
         // Close popup and reset selection
@@ -241,28 +84,33 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
         setAlertData(null);
     };
 
-    const handleTryAgain = () => {
-        // Reset everything for trying again
-        setShowAlert(false);
-        setSelectedLevel(null);
-        setAlertData(null);
-    };
-
-    const handleNextLevel = () => {
-        // Logic for next level would go here
-        setShowAlert(false);
-        setSelectedLevel(null);
-        setAlertData(null);
+    const getRabbitEmoji = (mood) => {
+        switch (mood) {
+            case 'happy': return '🐰';
+            case 'alert': return '🐇';
+            case 'nervous': return '😰';
+            case 'excited': return '⚡';
+            default: return '🐰';
+        }
     };
 
     return (
         <div className="level-selection-container">
-            {/* Animated Background */}
-            <div className="level-background">
-                <div className="floating-banana banana-1">🍌</div>
-                <div className="floating-banana banana-2">🍌</div>
-                <div className="floating-leaf leaf-1">🍃</div>
-                <div className="floating-cloud cloud-1">☁️</div>
+            {/* Jungle Background */}
+            <div className="jungle-background">
+                <div className="jungle-tree tree-1">🌴</div>
+                <div className="jungle-tree tree-2">🌳</div>
+                <div className="jungle-tree tree-3">🎄</div>
+                <div className="jungle-vine vine-1">🌿</div>
+                <div className="jungle-vine vine-2">🍃</div>
+                <div className="jungle-rock rock-1">🪨</div>
+                <div className="jungle-rock rock-2">🥌</div>
+                <div className="floating-carrot carrot-1">🥕</div>
+                <div className="floating-carrot carrot-2">🥕</div>
+                <div className="floating-carrot carrot-3">🥕</div>
+                <div className="jungle-flower flower-1">🌼</div>
+                <div className="jungle-flower flower-2">🌺</div>
+                <div className="jungle-flower flower-3">🌸</div>
             </div>
 
             {/* Header */}
@@ -272,7 +120,7 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
                     Back to Dashboard
                 </button>
                 <h1 className="level-title">Choose Your Challenge</h1>
-                <p className="level-subtitle">Select a difficulty level to begin your banana adventure!</p>
+                <p className="level-subtitle">Select a difficulty level to begin your jungle adventure with Thumper!</p>
             </div>
 
             {/* Level Cards Grid */}
@@ -286,7 +134,7 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
                     >
                         <div className="level-card-header">
                             <div className="level-icon" style={{ backgroundColor: level.color }}>
-                                {level.icon}
+                                {getRabbitEmoji(level.rabbitMood)}
                             </div>
                             <div className="level-info">
                                 <h3 className="level-name">{level.name}</h3>
@@ -296,7 +144,12 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
                         
                         <div className="level-timer">
                             <div className="timer-icon">⏱️</div>
-                            <span className="timer-text">Timer: {level.time}s</span>
+                            <span className="timer-text">{level.time} seconds</span>
+                        </div>
+
+                        <div className="carrot-reward">
+                            <div className="carrot-icon">🥕</div>
+                            <span className="carrot-text">Carrots: {level.difficulty * 5}</span>
                         </div>
 
                         <button className="level-start-button">
@@ -307,7 +160,7 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
                                     <span></span>
                                 </div>
                             ) : (
-                                'START'
+                                'START HOPPING'
                             )}
                         </button>
 
@@ -333,7 +186,7 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
                                 className="popup-icon"
                                 style={{ backgroundColor: alertData.level.color }}
                             >
-                                {alertData.level.icon}
+                                {getRabbitEmoji(alertData.level.rabbitMood)}
                             </div>
                             <h2 className="popup-title">{alertData.title}</h2>
                         </div>
@@ -348,6 +201,10 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
                                 <div className="detail-item">
                                     <span className="detail-label">Time Limit:</span>
                                     <span className="detail-value">{alertData.level.time} seconds</span>
+                                </div>
+                                <div className="detail-item">
+                                    <span className="detail-label">Carrot Reward:</span>
+                                    <span className="detail-value">{alertData.level.difficulty * 5} 🥕</span>
                                 </div>
                                 <div className="detail-item">
                                     <span className="detail-label">Description:</span>
@@ -368,7 +225,7 @@ const LevelSelection = ({ user, onBack, onLevelSelect }) => {
                                 onClick={handleStartGame}
                                 style={{ backgroundColor: alertData.level.color }}
                             >
-                                Start Game
+                                Start Hopping!
                             </button>
                         </div>
                     </div>

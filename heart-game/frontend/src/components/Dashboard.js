@@ -5,14 +5,14 @@ import './Dashboard.css';
 const Dashboard = ({ user, onLogout, onStartGame }) => {
     const [currentView, setCurrentView] = useState('dashboard');
     const [isVisible, setIsVisible] = useState(false);
-    const [monkeyAnimation, setMonkeyAnimation] = useState('idle');
+    const [rabbitAnimation, setRabbitAnimation] = useState('idle');
 
     useEffect(() => {
         setIsVisible(true);
     }, []);
 
     const handleStartAdventure = () => {
-        setMonkeyAnimation('excited');
+        setRabbitAnimation('excited');
         setTimeout(() => {
             setCurrentView('level-selection');
         }, 1000);
@@ -38,15 +38,22 @@ const Dashboard = ({ user, onLogout, onStartGame }) => {
 
     return (
         <div className="dashboard-container">
-            {/* Animated Background */}
-            <div className="background-elements">
-                <div className="floating-banana banana-1">🍌</div>
-                <div className="floating-banana banana-2">🍌</div>
-                <div className="floating-banana banana-3">🍌</div>
-                <div className="floating-leaf leaf-1">🍃</div>
-                <div className="floating-leaf leaf-2">🍃</div>
-                <div className="floating-cloud cloud-1">☁️</div>
-                <div className="floating-cloud cloud-2">☁️</div>
+            {/* Jungle Background Elements */}
+            <div className="jungle-background">
+                <div className="jungle-tree tree-1">🌴</div>
+                <div className="jungle-tree tree-2">🌳</div>
+                <div className="jungle-tree tree-3">🎄</div>
+                <div className="jungle-vine vine-1">🌿</div>
+                <div className="jungle-vine vine-2">🍃</div>
+                <div className="jungle-vine vine-3">🌱</div>
+                <div className="jungle-rock rock-1">🪨</div>
+                <div className="jungle-rock rock-2">🥌</div>
+                <div className="floating-carrot carrot-1">🥕</div>
+                <div className="floating-carrot carrot-2">🥕</div>
+                <div className="floating-carrot carrot-3">🥕</div>
+                <div className="jungle-flower flower-1">🌼</div>
+                <div className="jungle-flower flower-2">🌺</div>
+                <div className="jungle-flower flower-3">🌸</div>
             </div>
 
             <div className={`dashboard-content ${isVisible ? 'visible' : ''}`}>
@@ -61,38 +68,49 @@ const Dashboard = ({ user, onLogout, onStartGame }) => {
                         <p className="user-id">ID: {user?.id}</p>
                     </div>
                     <button className="logout-btn" onClick={onLogout}>
-                        <span>🚪</span>
+                        <span>🌿</span>
                         Logout
                     </button>
                 </div>
 
                 {/* Main Game Card */}
                 <div className="game-intro-card">
-                    <div className="monkey-character">
-                        <div className={`monkey ${monkeyAnimation}`}>
-                            <div className="monkey-face">🐵</div>
-                            <div className="monkey-body"></div>
+                    <div className="rabbit-character">
+                        <div className={`thumper-rabbit ${rabbitAnimation}`}>
+                            <div className="rabbit-ears">
+                                <div className="ear left-ear"></div>
+                                <div className="ear right-ear"></div>
+                            </div>
+                            <div className="rabbit-face">
+                                <div className="rabbit-eyes">
+                                    <div className="eye left-eye"></div>
+                                    <div className="eye right-eye"></div>
+                                </div>
+                                <div className="rabbit-nose"></div>
+                            </div>
+                            <div className="rabbit-body"></div>
                         </div>
                     </div>
                     
                     <h1 className="game-title">
-                        <span className="title-text">Hello There!</span>
+                        <span className="title-text">Hop Into Adventure!</span>
                         <div className="title-underline"></div>
                     </h1>
                     
                     <p className="game-description">
-                        Help our monkey collect as many bananas as possible while dodging obstacles. 
-                        Ready to go bananas? Tap Start to begin!
+                        Join Thumper the rabbit in an exciting jungle adventure! Collect carrots, 
+                        avoid obstacles, and explore the magical forest. Ready to hop? 
+                        Tap Start to begin your journey!
                     </p>
 
                     <button 
                         className="start-button"
                         onClick={handleStartAdventure}
-                        onMouseEnter={() => setMonkeyAnimation('looking')}
-                        onMouseLeave={() => setMonkeyAnimation('idle')}
+                        onMouseEnter={() => setRabbitAnimation('alert')}
+                        onMouseLeave={() => setRabbitAnimation('idle')}
                     >
-                        <span className="button-text">Start Adventure</span>
-                        <span className="button-icon">🎮</span>
+                        <span className="button-text">Start Hopping</span>
+                        <span className="button-icon">🏃‍♂️</span>
                         <div className="button-shine"></div>
                     </button>
 
@@ -105,10 +123,10 @@ const Dashboard = ({ user, onLogout, onStartGame }) => {
                             </div>
                         </div>
                         <div className="stat-item">
-                            <div className="stat-icon">🍌</div>
+                            <div className="stat-icon">🥕</div>
                             <div className="stat-info">
                                 <div className="stat-value">0</div>
-                                <div className="stat-label">Bananas</div>
+                                <div className="stat-label">Carrots</div>
                             </div>
                         </div>
                         <div className="stat-item">

@@ -1,74 +1,146 @@
-
-.heart-game-container {
+/* GamePage.css - Jungle Thumper Rabbit Theme */
+.jungle-game-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1a5f1a 0%, #2d7a2d 50%, #4caf4c 100%);
   position: relative;
   overflow: hidden;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* Background Elements */
-.heart-game-background {
+/* Jungle Background */
+.jungle-game-background {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
+  z-index: 1;
 }
 
-.heart-floating-hearts {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.heart-floating-hearts .heart-item {
+.jungle-tree, .jungle-vine, .jungle-rock, .jungle-flower, .floating-carrot {
   position: absolute;
-  font-size: 24px;
-  opacity: 0.3;
-  animation: heart-float 6s ease-in-out infinite;
+  font-size: 3rem;
+  animation: jungleFloat 10s ease-in-out infinite;
+  opacity: 0.8;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  z-index: 1;
 }
 
-.heart-floating-hearts .heart-item:nth-child(1) {
-  top: 10%;
-  left: 10%;
-  animation-delay: 0s;
+.jungle-tree {
+  font-size: 4rem;
+  opacity: 0.9;
 }
 
-.heart-floating-hearts .heart-item:nth-child(2) {
-  top: 20%;
-  right: 15%;
-  animation-delay: 1.5s;
+.tree-1 { top: 5%; left: 3%; animation-delay: 0s; }
+.tree-2 { top: 60%; left: 88%; animation-delay: -3s; font-size: 3.5rem; }
+.tree-3 { top: 25%; left: 92%; animation-delay: -6s; font-size: 3rem; }
+
+.jungle-vine {
+  font-size: 2.5rem;
+  opacity: 0.6;
+  animation: vineSway 8s ease-in-out infinite;
 }
 
-.heart-floating-hearts .heart-item:nth-child(3) {
-  bottom: 30%;
-  left: 15%;
-  animation-delay: 3s;
+.vine-1 { top: 15%; left: 85%; animation-delay: -1s; }
+.vine-2 { top: 75%; left: 8%; animation-delay: -4s; }
+
+.jungle-rock {
+  font-size: 2rem;
+  opacity: 0.7;
+  animation: rockBounce 12s ease-in-out infinite;
 }
 
-.heart-floating-hearts .heart-item:nth-child(4) {
-  bottom: 15%;
-  right: 10%;
-  animation-delay: 4.5s;
+.rock-1 { top: 85%; left: 12%; animation-delay: -2s; }
+.rock-2 { top: 90%; left: 80%; animation-delay: -5s; }
+
+.floating-carrot {
+  font-size: 2rem;
+  opacity: 0.9;
+  animation: carrotFloat 6s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(255, 165, 0, 0.4));
 }
 
-@keyframes heart-float {
+.carrot-1 { top: 20%; left: 10%; animation-delay: 0s; }
+.carrot-2 { top: 65%; left: 90%; animation-delay: -2s; font-size: 1.8rem; }
+.carrot-3 { top: 35%; left: 85%; animation-delay: -4s; font-size: 2.2rem; }
+
+.jungle-flower {
+  font-size: 1.8rem;
+  opacity: 0.7;
+  animation: flowerBloom 9s ease-in-out infinite;
+}
+
+.flower-1 { top: 80%; left: 20%; animation-delay: -1s; }
+.flower-2 { top: 15%; left: 75%; animation-delay: -3s; }
+.flower-3 { top: 45%; left: 15%; animation-delay: -5s; }
+
+@keyframes jungleFloat {
   0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-    opacity: 0.3;
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15px) rotate(2deg);
   }
   50% {
-    transform: translateY(-20px) rotate(10deg);
-    opacity: 0.6;
+    transform: translateY(10px) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+@keyframes vineSway {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-10px) rotate(3deg);
+  }
+  75% {
+    transform: translateX(10px) rotate(-3deg);
+  }
+}
+
+@keyframes rockBounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(5deg);
+  }
+}
+
+@keyframes carrotFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-20px) rotate(10deg) scale(1.1);
+  }
+  50% {
+    transform: translateY(5px) rotate(-5deg) scale(0.9);
+  }
+  75% {
+    transform: translateY(-15px) rotate(5deg) scale(1.05);
+  }
+}
+
+@keyframes flowerBloom {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+    opacity: 0.9;
   }
 }
 
 /* Main Content Wrapper */
-.heart-game-content {
+.jungle-game-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -76,7 +148,7 @@
 }
 
 /* Header Styles */
-.heart-game-header {
+.jungle-game-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -84,75 +156,77 @@
   margin-bottom: 30px;
 }
 
-.heart-header-left .heart-back-button {
+.jungle-header-left .jungle-back-button {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 12px 20px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(139, 195, 74, 0.3);
   border-radius: 12px;
-  color: white;
+  color: #2e7d32;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
-.heart-back-button:hover {
-  background: rgba(255, 255, 255, 0.2);
+.jungle-back-button:hover {
+  background: #8bc34a;
+  color: white;
   transform: translateX(-5px);
+  box-shadow: 0 6px 20px rgba(139, 195, 74, 0.3);
 }
 
-.heart-back-button svg {
-  width: 20px;
-  height: 20px;
-}
-
-.heart-header-center {
+.jungle-header-center {
   text-align: center;
   color: white;
 }
 
-.heart-header-center h1 {
+.jungle-header-center h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0 0 8px 0;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.heart-header-center p {
+.jungle-header-center p {
   font-size: 1.1rem;
   margin: 0;
   opacity: 0.9;
 }
 
-.heart-header-right .heart-user-stats {
+.jungle-header-right .jungle-user-stats {
   display: flex;
   gap: 30px;
 }
 
-.heart-stat-item {
+.jungle-stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   color: white;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.heart-stat-label {
+.jungle-stat-label {
   font-size: 0.9rem;
   opacity: 0.8;
   margin-bottom: 4px;
 }
 
-.heart-stat-value {
+.jungle-stat-value {
   font-size: 1.2rem;
   font-weight: 600;
 }
 
 /* Main Content Layout */
-.heart-main-content {
+.jungle-main-content {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 30px;
@@ -160,87 +234,358 @@
 }
 
 /* Game Area Styles */
-.heart-game-area {
+.jungle-game-area {
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
 
-.heart-game-card {
-  background: white;
+.jungle-game-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 255, 240, 0.9));
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   width: 100%;
   max-width: 600px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(139, 195, 74, 0.3);
 }
 
-.heart-game-card-header {
+/* Rabbit Character */
+.jungle-rabbit-character {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
-.heart-game-card-header h2 {
+.thumper-rabbit {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-bottom: 10px;
+}
+
+.thumper-rabbit.idle {
+  animation: rabbitIdle 3s ease-in-out infinite;
+}
+
+.thumper-rabbit.thinking {
+  animation: rabbitThink 2s ease-in-out infinite;
+}
+
+.thumper-rabbit.happy {
+  animation: rabbitHappy 0.6s ease-in-out;
+}
+
+.thumper-rabbit.sad {
+  animation: rabbitSad 1s ease-in-out infinite;
+}
+
+.thumper-rabbit.excited {
+  animation: rabbitExcited 0.8s ease-in-out;
+}
+
+.thumper-rabbit.nervous {
+  animation: rabbitNervous 0.5s ease-in-out infinite;
+}
+
+.thumper-rabbit.alert {
+  animation: rabbitAlert 1s ease-in-out infinite;
+}
+
+.thumper-rabbit.timeout {
+  animation: rabbitTimeout 2s ease-in-out;
+}
+
+.rabbit-ears {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+}
+
+.ear {
+  width: 12px;
+  height: 35px;
+  background: #8d6e63;
+  border-radius: 6px 6px 0 0;
+  position: relative;
+}
+
+.ear::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 2px;
+  right: 2px;
+  bottom: 4px;
+  background: #d7ccc8;
+  border-radius: 4px;
+}
+
+.rabbit-face {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 60px;
+  background: #f5f5f5;
+  border-radius: 35px 35px 25px 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rabbit-eyes {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+}
+
+.eye {
+  width: 10px;
+  height: 10px;
+  background: #5d4037;
+  border-radius: 50%;
+  animation: blink 3s infinite;
+}
+
+.rabbit-nose {
+  position: absolute;
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.3rem;
+}
+
+.rabbit-body {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 35px;
+  background: #f5f5f5;
+  border-radius: 20px 20px 10px 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rabbit-message {
+  font-size: 1rem;
+  color: #2e7d32;
+  font-weight: 500;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: rgba(139, 195, 74, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(139, 195, 74, 0.2);
+}
+
+/* Rabbit Animations */
+@keyframes rabbitIdle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-5px) rotate(1deg); }
+  75% { transform: translateY(-2px) rotate(-1deg); }
+}
+
+@keyframes rabbitThink {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-3px) rotate(-5deg); }
+  75% { transform: translateY(-3px) rotate(5deg); }
+}
+
+@keyframes rabbitHappy {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1) rotate(-5deg); }
+  50% { transform: scale(1.2) rotate(5deg); }
+  75% { transform: scale(1.1) rotate(-3deg); }
+}
+
+@keyframes rabbitSad {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes rabbitExcited {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.2) rotate(-10deg); }
+  50% { transform: scale(1.3) rotate(10deg); }
+  75% { transform: scale(1.2) rotate(-5deg); }
+}
+
+@keyframes rabbitNervous {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes rabbitAlert {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes rabbitTimeout {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+/* Game Card Header */
+.jungle-game-card-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.jungle-game-card-header h2 {
   font-size: 1.8rem;
-  color: #333;
+  color: #2e7d32;
   margin: 0 0 10px 0;
 }
 
-.heart-game-card-header p {
+.jungle-game-card-header p {
   font-size: 1.1rem;
   color: #666;
   margin: 0;
 }
 
+/* Timer Section */
+.jungle-timer-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.jungle-timer-display {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.jungle-timer-display.normal {
+  transform: scale(1);
+}
+
+.jungle-timer-display.warning {
+  animation: jungle-pulse 1s ease-in-out infinite;
+}
+
+.jungle-timer-display.critical {
+  animation: jungle-pulse 0.5s ease-in-out infinite;
+}
+
+@keyframes jungle-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.jungle-timer-circle {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.jungle-timer-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.jungle-timer-bg {
+  fill: none;
+  stroke: #f0f0f0;
+  stroke-width: 8;
+}
+
+.jungle-timer-progress {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.jungle-timer-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.jungle-time-left {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2e7d32;
+  line-height: 1.2;
+}
+
+.jungle-timer-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 500;
+}
+
 /* Image Container */
-.heart-image-container {
+.jungle-image-container {
   margin: 25px 0;
   text-align: center;
 }
 
-.heart-puzzle-image {
+.jungle-puzzle-image {
   max-width: 100%;
   height: auto;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  border: 3px solid #f0f0f0;
+  border: 3px solid #8bc34a;
 }
 
 /* Answer Section */
-.heart-answer-section {
+.jungle-answer-section {
   margin-top: 25px;
 }
 
-.heart-answer-form .heart-input-container {
+.jungle-answer-form .jungle-input-container {
   display: flex;
   gap: 12px;
   align-items: stretch;
 }
 
-.heart-answer-form input {
+.jungle-answer-form input {
   flex: 1;
   padding: 16px 20px;
-  border: 2px solid #e1e5e9;
+  border: 2px solid #8bc34a;
   border-radius: 12px;
   font-size: 1.1rem;
   transition: all 0.3s ease;
   background: #f8f9fa;
 }
 
-.heart-answer-form input:focus {
+.jungle-answer-form input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #4caf50;
   background: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.1);
 }
 
-.heart-submit-btn {
+.jungle-submit-btn {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 16px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #8bc34a 0%, #4caf50 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -250,44 +595,46 @@
   transition: all 0.3s ease;
 }
 
-.heart-submit-btn:hover {
+.jungle-submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 20px rgba(139, 195, 74, 0.3);
 }
 
-.heart-btn-icon {
+.jungle-btn-icon {
   font-size: 1.2rem;
 }
 
 /* Results Section */
-.heart-results-section {
+.jungle-results-section {
   text-align: center;
   padding: 20px 0;
+  border-radius: 20px;
+  margin: -30px;
+  padding: 30px;
 }
 
-.heart-results-section.correct {
+.jungle-results-section.correct {
   background: linear-gradient(135deg, #4CAF50, #45a049);
   color: white;
-  margin: -30px;
-  padding: 30px;
-  border-radius: 20px;
 }
 
-.heart-results-section.wrong {
+.jungle-results-section.wrong {
   background: linear-gradient(135deg, #ff6b6b, #ee5a52);
   color: white;
-  margin: -30px;
-  padding: 30px;
-  border-radius: 20px;
 }
 
-.heart-result-icon {
+.jungle-results-section.timeout {
+  background: linear-gradient(135deg, #FF9800, #F57C00);
+  color: white;
+}
+
+.jungle-result-icon {
   font-size: 4rem;
   margin-bottom: 20px;
-  animation: heart-bounce 0.6s ease;
+  animation: jungle-bounce 0.6s ease;
 }
 
-@keyframes heart-bounce {
+@keyframes jungle-bounce {
   0%, 20%, 60%, 100% {
     transform: translateY(0);
   }
@@ -299,18 +646,18 @@
   }
 }
 
-.heart-result-text h3 {
+.jungle-result-text h3 {
   font-size: 1.8rem;
   margin: 0 0 15px 0;
 }
 
-.heart-result-text p {
+.jungle-result-text p {
   font-size: 1.1rem;
   margin: 0 0 25px 0;
   opacity: 0.9;
 }
 
-.heart-next-btn {
+.jungle-next-btn {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -326,71 +673,84 @@
   transition: all 0.3s ease;
 }
 
-.heart-next-btn:hover {
+.jungle-next-btn:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: translateX(5px);
 }
 
 /* Loading State */
-.heart-loading-state {
+.jungle-loading-state {
   text-align: center;
   padding: 60px 30px;
-  color: #333;
+  color: #2e7d32;
 }
 
-.heart-loading-spinner {
+.jungle-loading-spinner {
   width: 50px;
   height: 50px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #667eea;
+  border-top: 4px solid #8bc34a;
   border-radius: 50%;
-  animation: heart-spin 1s linear infinite;
+  animation: jungle-spin 1s linear infinite;
   margin: 0 auto 20px;
 }
 
-@keyframes heart-spin {
+@keyframes jungle-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-.heart-loading-state h3 {
+.jungle-rabbit-animation {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  animation: jungle-bounce 2s ease-in-out infinite;
+}
+
+.jungle-loading-state h3 {
   font-size: 1.5rem;
   margin: 0 0 10px 0;
 }
 
-.heart-loading-state p {
+.jungle-loading-state p {
   font-size: 1rem;
   color: #666;
   margin: 0;
 }
 
 /* Error State */
-.heart-error-state {
+.jungle-error-state {
   text-align: center;
   padding: 60px 30px;
-  color: #333;
+  color: #2e7d32;
 }
 
-.heart-error-icon {
+.jungle-error-icon {
   font-size: 4rem;
   margin-bottom: 20px;
+  animation: jungle-shake 0.5s ease-in-out;
 }
 
-.heart-error-state h3 {
+@keyframes jungle-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.jungle-error-state h3 {
   font-size: 1.5rem;
   margin: 0 0 10px 0;
   color: #e74c3c;
 }
 
-.heart-error-state p {
+.jungle-error-state p {
   font-size: 1rem;
   color: #666;
   margin: 0 0 25px 0;
 }
 
-.heart-retry-button {
+.jungle-retry-button {
   padding: 14px 28px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #8bc34a 0%, #4caf50 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -400,226 +760,92 @@
   transition: all 0.3s ease;
 }
 
-.heart-retry-button:hover {
+.jungle-retry-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 20px rgba(139, 195, 74, 0.3);
 }
 
 /* Instructions Sidebar */
-.heart-instructions-sidebar {
+.jungle-instructions-sidebar {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
 }
 
-.heart-instructions-card {
-  background: white;
+.jungle-instructions-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 255, 240, 0.9));
   border-radius: 20px;
   padding: 30px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   width: 100%;
+  border: 2px solid rgba(139, 195, 74, 0.3);
+  backdrop-filter: blur(20px);
 }
 
-.heart-instructions-card h3 {
+.jungle-instructions-card h3 {
   font-size: 1.5rem;
-  color: #333;
+  color: #2e7d32;
   margin: 0 0 25px 0;
   text-align: center;
 }
 
-.heart-instructions-list {
+.jungle-instructions-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-bottom: 30px;
 }
 
-.heart-instruction-item {
+.jungle-instruction-item {
   display: flex;
   align-items: flex-start;
   gap: 15px;
   padding: 15px;
-  background: #f8f9fa;
+  background: rgba(139, 195, 74, 0.1);
   border-radius: 12px;
+  border: 1px solid rgba(139, 195, 74, 0.2);
   transition: all 0.3s ease;
 }
 
-.heart-instruction-item:hover {
-  background: #e9ecef;
+.jungle-instruction-item:hover {
+  background: rgba(139, 195, 74, 0.15);
   transform: translateX(5px);
 }
 
-.heart-instruction-icon {
+.jungle-instruction-icon {
   font-size: 1.3rem;
   flex-shrink: 0;
 }
 
-.heart-instruction-item span:last-child {
+.jungle-instruction-item span:last-child {
   font-size: 0.95rem;
   color: #555;
   line-height: 1.4;
 }
 
-.heart-pro-tips {
+.jungle-pro-tips {
   background: linear-gradient(135deg, #fff3cd, #ffeaa7);
   padding: 20px;
   border-radius: 12px;
   border-left: 4px solid #ffc107;
+  margin-bottom: 20px;
 }
 
-.heart-pro-tips h4 {
+.jungle-pro-tips h4 {
   font-size: 1.2rem;
   color: #856404;
   margin: 0 0 10px 0;
 }
 
-.heart-pro-tips p {
+.jungle-pro-tips p {
   font-size: 0.95rem;
   color: #856404;
   margin: 0;
   line-height: 1.5;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .heart-main-content {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  
-  .heart-instructions-sidebar {
-    order: -1;
-  }
-}
-
-@media (max-width: 768px) {
-  .heart-game-header {
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-  }
-  
-  .heart-header-center h1 {
-    font-size: 2rem;
-  }
-  
-  .heart-user-stats {
-    justify-content: center;
-  }
-  
-  .heart-answer-form .heart-input-container {
-    flex-direction: column;
-  }
-  
-  .heart-game-card {
-    padding: 20px;
-    margin: 0 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .heart-game-content {
-    padding: 10px;
-  }
-  
-  .heart-header-center h1 {
-    font-size: 1.8rem;
-  }
-  
-  .heart-game-card-header h2 {
-    font-size: 1.5rem;
-  }
-  
-  .heart-instruction-item {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-  }
-}
-
-
-
-/* Timer Styles */
-.heart-timer-section {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 25px;
-}
-
-.heart-timer-display {
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.heart-timer-display.normal {
-  transform: scale(1);
-}
-
-.heart-timer-display.warning {
-  animation: heart-pulse 1s ease-in-out infinite;
-}
-
-.heart-timer-display.critical {
-  animation: heart-pulse 0.5s ease-in-out infinite;
-}
-
-@keyframes heart-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-.heart-timer-circle {
-  position: relative;
-  width: 120px;
-  height: 120px;
-}
-
-.heart-timer-svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
-
-.heart-timer-bg {
-  fill: none;
-  stroke: #f0f0f0;
-  stroke-width: 8;
-}
-
-.heart-timer-progress {
-  fill: none;
-  stroke-width: 8;
-  stroke-linecap: round;
-  stroke-dasharray: 283;
-  stroke-dashoffset: 283;
-  transition: stroke-dashoffset 1s linear;
-}
-
-.heart-timer-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
-.heart-time-left {
-  display: block;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #333;
-  line-height: 1.2;
-}
-
-.heart-timer-label {
-  display: block;
-  font-size: 0.8rem;
-  color: #666;
-  font-weight: 500;
-}
-
-/* Difficulty Info Styles */
-.heart-difficulty-info {
+/* Difficulty Info */
+.jungle-difficulty-info {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
@@ -627,7 +853,7 @@
   align-items: center;
 }
 
-.heart-difficulty-badge {
+.jungle-difficulty-badge {
   background: rgba(255, 255, 255, 0.2);
   color: white;
   padding: 4px 12px;
@@ -637,101 +863,419 @@
   backdrop-filter: blur(10px);
 }
 
-.heart-difficulty-time {
+.jungle-difficulty-time {
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.85rem;
 }
 
-.heart-difficulty-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.jungle-difficulty-card {
+  background: linear-gradient(135deg, #8bc34a 0%, #4caf50 100%);
   color: white;
   padding: 20px;
   border-radius: 12px;
   margin-top: 20px;
 }
 
-.heart-difficulty-card h4 {
+.jungle-difficulty-card h4 {
   margin: 0 0 10px 0;
   font-size: 1.1rem;
   text-align: center;
 }
 
-.heart-difficulty-details {
+.jungle-difficulty-details {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
 }
 
-.heart-difficulty-name {
+.jungle-difficulty-name {
   font-size: 1.2rem;
   font-weight: 700;
 }
 
-.heart-difficulty-timer {
+.jungle-difficulty-timer {
   font-size: 0.9rem;
   opacity: 0.9;
 }
 
-/* Enhanced Results Section for Timeout */
-.heart-results-section.timeout {
-  background: linear-gradient(135deg, #FF9800, #F57C00);
-  color: white;
-  margin: -30px;
-  padding: 30px;
-  border-radius: 20px;
+.jungle-difficulty-carrots {
+  font-size: 0.9rem;
+  opacity: 0.9;
 }
 
 /* Disabled input style */
-.heart-answer-form input:disabled {
+.jungle-answer-form input:disabled {
   background: #f5f5f5;
   color: #999;
   cursor: not-allowed;
 }
 
-.heart-submit-btn:disabled {
+.jungle-submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none !important;
 }
 
-.heart-submit-btn:disabled:hover {
+.jungle-submit-btn:disabled:hover {
   transform: none !important;
   box-shadow: none !important;
 }
 
-/* Responsive Timer */
-@media (max-width: 768px) {
-  .heart-timer-circle {
-    width: 100px;
-    height: 100px;
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .jungle-main-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
   
-  .heart-time-left {
-    font-size: 1.3rem;
-  }
-  
-  .heart-timer-label {
-    font-size: 0.75rem;
+  .jungle-instructions-sidebar {
+    order: -1;
   }
 }
 
-@media (max-width: 480px) {
-  .heart-timer-circle {
+@media (max-width: 768px) {
+  .jungle-game-header {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .jungle-header-center h1 {
+    font-size: 2rem;
+  }
+  
+  .jungle-user-stats {
+    justify-content: center;
+  }
+  
+  .jungle-answer-form .jungle-input-container {
+    flex-direction: column;
+  }
+  
+  .jungle-game-card {
+    padding: 20px;
+    margin: 0 10px;
+  }
+  
+  .thumper-rabbit {
     width: 80px;
     height: 80px;
   }
   
-  .heart-time-left {
+  .jungle-timer-circle {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .jungle-game-content {
+    padding: 10px;
+  }
+  
+  .jungle-header-center h1 {
+    font-size: 1.8rem;
+  }
+  
+  .jungle-game-card-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .jungle-instruction-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .jungle-timer-circle {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .jungle-time-left {
     font-size: 1.1rem;
   }
   
-  .heart-timer-label {
-    font-size: 0.7rem;
+  .jungle-tree, .jungle-vine, .jungle-rock, .jungle-flower, .floating-carrot {
+    font-size: 2rem;
+  }
+}
+
+
+
+/* Add these styles to your existing GamePage.css */
+
+/* Game Stats Card */
+.jungle-stats-card {
+  background: linear-gradient(135deg, #8bc34a 0%, #4caf50 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+.jungle-stats-card h4 {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.jungle-stats-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-row:last-child {
+  border-bottom: none;
+}
+
+.stat-value {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Game Over Popup */
+.jungle-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: jungle-fadeIn 0.3s ease;
+}
+
+@keyframes jungle-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.jungle-popup-dialog {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 255, 240, 0.9));
+  border-radius: 24px;
+  padding: 2.5rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  animation: jungle-slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 2px solid rgba(139, 195, 74, 0.3);
+  backdrop-filter: blur(20px);
+}
+
+@keyframes jungle-slideUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.jungle-popup-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.jungle-popup-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: jungle-bounce 0.6s ease;
+}
+
+.jungle-popup-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2e7d32;
+  margin: 0;
+}
+
+.jungle-popup-content {
+  margin-bottom: 2rem;
+}
+
+.jungle-final-stats {
+  background: rgba(139, 195, 74, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(139, 195, 74, 0.2);
+}
+
+.final-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(139, 195, 74, 0.1);
+}
+
+.final-stat:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.final-stat-label {
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+.final-stat-value {
+  font-weight: 700;
+  color: #2e7d32;
+  font-size: 1.2rem;
+}
+
+.jungle-popup-message {
+  font-size: 1.1rem;
+  color: #666;
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.jungle-popup-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.jungle-popup-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  min-width: 160px;
+  justify-content: center;
+}
+
+.jungle-popup-button-primary {
+  background: linear-gradient(135deg, #8bc34a 0%, #4caf50 100%);
+  color: white;
+}
+
+.jungle-popup-button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139, 195, 74, 0.3);
+}
+
+.jungle-popup-button-secondary {
+  background: rgba(139, 195, 74, 0.1);
+  color: #2e7d32;
+  border: 2px solid rgba(139, 195, 74, 0.3);
+}
+
+.jungle-popup-button-secondary:hover {
+  background: rgba(139, 195, 74, 0.2);
+  transform: translateY(-2px);
+}
+
+.button-icon {
+  font-size: 1.2rem;
+}
+
+/* Responsive Design for Popup */
+@media (max-width: 768px) {
+  .jungle-popup-dialog {
+    padding: 2rem 1.5rem;
   }
   
-  .heart-difficulty-info {
+  .jungle-popup-actions {
     flex-direction: column;
-    gap: 3px;
+  }
+  
+  .jungle-popup-button {
+    width: 100%;
+  }
+  
+  .jungle-popup-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .jungle-popup-dialog {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .jungle-popup-icon {
+    font-size: 3rem;
+  }
+}
+
+/* Add these styles to your existing GamePage.css */
+
+/* Mini-game specific styles */
+.mini-game-display {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(139, 195, 74, 0.1);
+  border-radius: 16px;
+  border: 2px solid rgba(139, 195, 74, 0.3);
+  margin: 1rem 0;
+}
+
+.carrot-display {
+  font-size: 4rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  animation: carrot-bounce 2s ease-in-out infinite;
+}
+
+@keyframes carrot-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.mini-game-hint {
+  font-size: 1rem;
+  color: #666;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+/* Enhanced responsive design for mini-game */
+@media (max-width: 768px) {
+  .carrot-display {
+    font-size: 3rem;
+  }
+  
+  .mini-game-display {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .carrot-display {
+    font-size: 2.5rem;
+  }
+  
+  .mini-game-display {
+    padding: 1rem;
   }
 }
