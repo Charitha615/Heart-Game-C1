@@ -18,6 +18,7 @@ const GamePage = ({ user, gameSettings, onBack }) => {
   const [isMiniGame, setIsMiniGame] = useState(false);
   const [miniGameChances, setMiniGameChances] = useState(3); // 3 chances to continue
   const [showMiniGamePopup, setShowMiniGamePopup] = useState(false);
+  const [showQuitConfirm, setShowQuitConfirm] = useState(false);
   const inputRef = useRef(null);
   const timerRef = useRef(null);
 
@@ -95,9 +96,15 @@ const GamePage = ({ user, gameSettings, onBack }) => {
     }
   };
 
-  // Save score to backend - FIXED VERSION
+  // Save score to backend - ONLY FOR MAIN GAME
   const saveScoreToBackend = async (finalScore, status, correctAnswers) => {
     try {
+      // Don't save mini-game scores to database
+      if (isMiniGame) {
+        console.log('Mini-game score not saved to database');
+        return;
+      }
+
       const currentUser = getStoredUser();
 
       // Map frontend status to backend enum values
@@ -106,7 +113,8 @@ const GamePage = ({ user, gameSettings, onBack }) => {
         'wrong': 'completed',
         'timeout': 'completed',
         'gameOver': 'completed',
-        'playing': 'active'
+        'playing': 'active',
+        'quit': 'completed'
       };
 
       const gameData = {
@@ -117,15 +125,15 @@ const GamePage = ({ user, gameSettings, onBack }) => {
         status: statusMap[status] || 'completed',
         correctAnswers: correctAnswers,
         totalQuestions: totalQuestions,
-        gameType: isMiniGame ? 'mini-carrot-counting' : 'carrot-counting',
+        gameType: 'carrot-counting', // Always main game type for DB
         sessionId: gameSessionId
       };
 
-      console.log('Saving score:', gameData);
+      console.log('Saving score to database:', gameData);
       await gameAPI.saveScore(gameData);
-      console.log('Score saved successfully');
+      console.log('Score saved successfully to database');
     } catch (error) {
-      console.error('Error saving score:', error);
+      console.error('Error saving score to database:', error);
     }
   };
 
@@ -263,16 +271,47 @@ const GamePage = ({ user, gameSettings, onBack }) => {
     }
   };
 
+  // Handle quit game
+  const handleQuitGame = async () => {
+    // Save current score to database before quitting
+    await saveScoreToBackend(score, 'quit', consecutiveCorrect);
+    await updateGameSession('completed', score);
+    
+    // Go back to main menu
+    onBack();
+  };
+
+  // Handle quit confirmation
+  const handleQuitConfirm = () => {
+    setShowQuitConfirm(true);
+  };
+
+  // Handle cancel quit
+  const handleCancelQuit = () => {
+    setShowQuitConfirm(false);
+  };
+
   useEffect(() => {
     const initialTime = getTimeForDifficulty();
     setTimeLeft(initialTime);
     fetchQuestion();
     startNewGameSession();
+
+    // Cleanup function to save score if component unmounts
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      // Auto-save if game is in progress when leaving
+      if (gameStatus === 'playing' && !isMiniGame && score > 0) {
+        saveScoreToBackend(score, 'quit', consecutiveCorrect);
+      }
+    };
   }, []);
 
-  // Countdown timer effect
+  // Countdown timer effect - FIXED: Only start timer when question is loaded
   useEffect(() => {
-    if (timeLeft > 0 && gameStatus === 'playing') {
+    if (timeLeft > 0 && gameStatus === 'playing' && questionData) {
       timerRef.current = setTimeout(() => {
         setTimeLeft(timeLeft - 1);
 
@@ -284,7 +323,7 @@ const GamePage = ({ user, gameSettings, onBack }) => {
           setRabbitAnimation('alert');
         }
       }, 1000);
-    } else if (timeLeft === 0 && gameStatus === 'playing') {
+    } else if (timeLeft === 0 && gameStatus === 'playing' && questionData) {
       if (isMiniGame) {
         handleMiniGameFailure();
       } else {
@@ -297,7 +336,7 @@ const GamePage = ({ user, gameSettings, onBack }) => {
         clearTimeout(timerRef.current);
       }
     };
-  }, [timeLeft, gameStatus]);
+  }, [timeLeft, gameStatus, questionData]);
 
   // Reset timer when game status changes
   useEffect(() => {
@@ -313,9 +352,11 @@ const GamePage = ({ user, gameSettings, onBack }) => {
     setGameStatus('gameOver');
     setRabbitAnimation('sad');
 
-    // Save score to backend
-    await saveScoreToBackend(score, reason, consecutiveCorrect);
-    await updateGameSession('completed', score);
+    // Save score to backend ONLY for main game
+    if (!isMiniGame) {
+      await saveScoreToBackend(score, reason, consecutiveCorrect);
+      await updateGameSession('completed', score);
+    }
 
     // Show game over popup after a short delay
     setTimeout(() => {
@@ -333,22 +374,22 @@ const GamePage = ({ user, gameSettings, onBack }) => {
     // Allow 0 as valid answer
     if (userAnswerNum === questionData.solution) {
       if (isMiniGame) {
-        // Mini-game success
+        // Mini-game success - DON'T save to database
         setGameStatus('correct');
         const carrotsEarned = questionData.carrots;
         const newScore = score + carrotsEarned;
         setScore(newScore);
         setRabbitAnimation('happy');
         
-        // Save progress
-        await saveScoreToBackend(newScore, 'correct', consecutiveCorrect);
+        // DON'T save mini-game progress to database
+        console.log('Mini-game success - score not saved to database');
         
         // Show success message and then continue to main game
         setTimeout(() => {
           handleMiniGameSuccess();
         }, 1500);
       } else {
-        // Main game success
+        // Main game success - save to database
         setGameStatus('correct');
         const carrotsEarned = questionData.carrots || 10; // Default carrots if not specified
         const newScore = score + carrotsEarned;
@@ -356,7 +397,7 @@ const GamePage = ({ user, gameSettings, onBack }) => {
         setConsecutiveCorrect(prev => prev + 1);
         setRabbitAnimation('happy');
         
-        // Save progress after correct answer
+        // Save progress after correct answer to database
         await saveScoreToBackend(newScore, 'correct', consecutiveCorrect + 1);
       }
     } else {
@@ -388,6 +429,7 @@ const GamePage = ({ user, gameSettings, onBack }) => {
   const handleTryAgain = async () => {
     setShowGameOver(false);
     setShowMiniGamePopup(false);
+    setShowQuitConfirm(false);
 
     // Reset all game state
     setScore(0);
@@ -478,9 +520,9 @@ const GamePage = ({ user, gameSettings, onBack }) => {
         {/* Header */}
         <header className="jungle-game-header">
           <div className="jungle-header-left">
-            <button className="jungle-back-button" onClick={onBack}>
+            <button className="jungle-back-button" onClick={handleQuitConfirm}>
               <span className="jungle-back-icon">←</span>
-              Back to Jungle
+              Quit Game
             </button>
           </div>
 
@@ -587,7 +629,7 @@ const GamePage = ({ user, gameSettings, onBack }) => {
                 </div>
 
                 {/* Timer Display */}
-                {gameStatus === 'playing' && (
+                {gameStatus === 'playing' && questionData && (
                   <div className="jungle-timer-section">
                     <div className={`jungle-timer-display ${getTimerWarning()}`}>
                       <div className="jungle-timer-circle">
@@ -666,7 +708,7 @@ const GamePage = ({ user, gameSettings, onBack }) => {
                 </div>
 
                 {/* Answer Section */}
-                {gameStatus === 'playing' && (
+                {gameStatus === 'playing' && questionData && (
                   <div className="jungle-answer-section">
                     <form onSubmit={handleSubmit} className="jungle-answer-form">
                       <div className="jungle-input-container">
@@ -837,6 +879,60 @@ const GamePage = ({ user, gameSettings, onBack }) => {
           </div>
         </div>
       </div>
+
+      {/* Quit Confirmation Popup */}
+      {showQuitConfirm && (
+        <div className="jungle-popup-overlay">
+          <div className="jungle-popup-dialog">
+            <div className="jungle-popup-header">
+              <div className="jungle-popup-icon">
+                🚪
+              </div>
+              <h2 className="jungle-popup-title">
+                Quit Game?
+              </h2>
+            </div>
+
+            <div className="jungle-popup-content">
+              <div className="jungle-final-stats">
+                <div className="final-stat">
+                  <span className="final-stat-label">Current Score</span>
+                  <span className="final-stat-value">{score} 🥕</span>
+                </div>
+                <div className="final-stat">
+                  <span className="final-stat-label">Correct Answers</span>
+                  <span className="final-stat-value">{consecutiveCorrect}</span>
+                </div>
+                <div className="final-stat">
+                  <span className="final-stat-label">Total Questions</span>
+                  <span className="final-stat-value">{totalQuestions}</span>
+                </div>
+              </div>
+              
+              <p className="jungle-popup-message">
+                Are you sure you want to quit? Your current progress will be saved to the database.
+              </p>
+            </div>
+
+            <div className="jungle-popup-actions">
+              <button 
+                className="jungle-popup-button jungle-popup-button-secondary"
+                onClick={handleCancelQuit}
+              >
+                <span className="button-icon">↶</span>
+                Cancel
+              </button>
+              <button 
+                className="jungle-popup-button jungle-popup-button-primary"
+                onClick={handleQuitGame}
+              >
+                <span className="button-icon">🚪</span>
+                Quit Game
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Mini-Game Chance Popup */}
       {showMiniGamePopup && (
